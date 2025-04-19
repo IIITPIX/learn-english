@@ -43,16 +43,18 @@ export function Header() {
 
         <div className="hidden md:flex items-center gap-4">
           <DropDownLanguageSwitcher />
-          <Button color="white">
-            <IoEnterOutline className="w-5 h-5" />
-          </Button>
+          <Link href="/login">
+            <Button color="white">
+              <IoEnterOutline className="w-5 h-5" />
+            </Button>
+          </Link>
           <Link href="/registration">
             <Button
               className="flex justify-center items-center border cursor-pointer"
               color="outline"
             >
               <CiUser className="h-5 w-5 mr-1" />
-              Регістрація
+              Реєстрація
             </Button>
           </Link>
         </div>

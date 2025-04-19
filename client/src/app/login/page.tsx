@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
 
-export default function Registration() {
+export default function Login() {
   const [form, setForm] = useState({
-    name: "",
     email: "",
     password: "",
   });
@@ -14,8 +13,8 @@ export default function Registration() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    setError(null); // очищаємо помилку при зміні
-    setSuccess(null); // очищаємо повідомлення про успіх
+    setError(null);
+    setSuccess(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,7 +22,7 @@ export default function Registration() {
 
     try {
       const response = await fetch(
-        "https://learn-english-production-d030.up.railway.app/api/auth/registration",
+        "https://learn-english-production-d030.up.railway.app/api/auth/login",
         {
           method: "POST",
           headers: {
@@ -31,7 +30,6 @@ export default function Registration() {
           },
           body: JSON.stringify({
             email: form.email,
-            username: form.name,
             password: form.password,
           }),
         },
@@ -40,20 +38,22 @@ export default function Registration() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Помилка реєстрації");
+        setError(data.message || "Помилка входу");
         return;
       }
 
-      setSuccess("Реєстрація успішна!");
-      setForm({ name: "", email: "", password: "" });
+      setSuccess("Вхід успішний!");
+      console.log("Login response:", data);
+
+      // TODO: Зберегти токен, зробити редірект тощо
     } catch (error) {
-      setError("Щось пішло не так. Спробуйте ще раз.");
+      setError("Щось пішло не так. Спробуйте пізніше." + error);
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-xl rounded-2xl">
-      <h1 className="text-2xl font-bold mb-6 text-center">Реєстрація</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Вхід</h1>
 
       {error && (
         <div className="mb-4 text-red-600 font-medium text-center">{error}</div>
@@ -65,17 +65,6 @@ export default function Registration() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Ім’я</label>
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            className="w-full border rounded-md px-3 py-2"
-          />
-        </div>
         <div>
           <label className="block text-sm font-medium mb-1">Email</label>
           <input
@@ -94,7 +83,6 @@ export default function Registration() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            minLength={8}
             required
             className="w-full border rounded-md px-3 py-2"
           />
@@ -103,7 +91,7 @@ export default function Registration() {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
         >
-          Зареєструватися
+          Увійти
         </button>
       </form>
     </div>
