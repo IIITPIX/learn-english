@@ -47,7 +47,7 @@ export default function Registration() {
       setSuccess("Реєстрація успішна!");
       setForm({ name: "", email: "", password: "" });
     } catch (error) {
-      setError("Щось пішло не так. Спробуйте ще раз.");
+      setError("Щось пішло не так. Спробуйте ще раз." + error);
     }
   };
 
