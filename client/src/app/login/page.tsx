@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -38,16 +40,17 @@ export default function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Помилка входу");
+        setError(data.message || "Login error");
         return;
       }
 
-      setSuccess("Вхід успішний!");
-      console.log("Login response:", data);
-
-      // TODO: Зберегти токен, зробити редірект тощо
+      setSuccess("Login successful!");
+      // Save token
+      localStorage.setItem("token", data.access_token);
+      // Redirect to main page
+      router.push("/");
     } catch (error) {
-      setError("Щось пішло не так. Спробуйте пізніше." + error);
+      setError("Something went wrong. Please try again later." + error);
     }
   };
 

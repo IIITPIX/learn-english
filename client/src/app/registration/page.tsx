@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Registration() {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -14,8 +16,8 @@ export default function Registration() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    setError(null); // очищаємо помилку при зміні
-    setSuccess(null); // очищаємо повідомлення про успіх
+    setError(null); // Clean error after change
+    setSuccess(null); // Clean message aftes success
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,14 +42,18 @@ export default function Registration() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Помилка реєстрації");
+        setError(data.message || "Registration error");
         return;
       }
 
-      setSuccess("Реєстрація успішна!");
+      setSuccess("Registration successful!");
       setForm({ name: "", email: "", password: "" });
+      // Save token
+      localStorage.setItem("token", data.access_token);
+      // Redirect to main page
+      router.push("/");
     } catch (error) {
-      setError("Щось пішло не так. Спробуйте ще раз." + error);
+      setError("Something went wrong. Please try again." + error);
     }
   };
 
