@@ -49,7 +49,7 @@ export default function Registration() {
       setSuccess("Registration successful!");
       setForm({ name: "", email: "", password: "" });
       // Save token
-      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("access_token", data.access_token);
       // Redirect to main page
       router.push("/");
     } catch (error) {
@@ -59,7 +59,7 @@ export default function Registration() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-xl rounded-2xl">
-      <h1 className="text-2xl font-bold mb-6 text-center">Реєстрація</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Registration</h1>
 
       {error && (
         <div className="mb-4 text-red-600 font-medium text-center">{error}</div>
@@ -72,7 +72,7 @@ export default function Registration() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Ім’я</label>
+          <label className="block text-sm font-medium mb-1">User name</label>
           <input
             type="text"
             name="name"
@@ -94,7 +94,7 @@ export default function Registration() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">Пароль</label>
+          <label className="block text-sm font-medium mb-1">Password</label>
           <input
             type="password"
             name="password"
@@ -109,7 +109,7 @@ export default function Registration() {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
         >
-          Зареєструватися
+          Register
         </button>
       </form>
     </div>

@@ -1,6 +1,7 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/shared/ui/Button";
 import { RxHamburgerMenu } from "react-icons/rx";
+import Link from "next/link";
 
 export function DropDownUserMenu() {
   const logout = () => {
@@ -23,7 +24,7 @@ export function DropDownUserMenu() {
           className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
           // onSelect={() => {}}
         >
-          <p>AdminPanel</p>
+          <Link href="/admin-panel">AdminPanel</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
