@@ -53,19 +53,19 @@ export function Header() {
             href="#"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            Практика
+            Practice
           </Link>
           <Link
             href="#"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            Словарь
+            Dictionary
           </Link>
           <Link
             href="#"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            Спільнота
+            Community
           </Link>
         </nav>
         {isLoggedIn ? (
@@ -87,7 +87,7 @@ export function Header() {
                 color="outline"
               >
                 <CiUser className="h-5 w-5 mr-1" />
-                Реєстрація
+                Registration
               </Button>
             </Link>
           </div>
