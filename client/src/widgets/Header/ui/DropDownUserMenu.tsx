@@ -3,7 +3,10 @@ import { Button } from "@/shared/ui/Button";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 export function DropDownUserMenu() {
-  const LANGUAGES = [{ title: "AdminPanel" }];
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    window.location.href = "/"; // або "/" — залежно від логіки
+  };
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -16,15 +19,18 @@ export function DropDownUserMenu() {
         align="center"
         className="z-50 min-w-[8rem] bg-white p-1 shadow-md border-1-gray-200"
       >
-        {LANGUAGES.map((lang) => (
-          <DropdownMenu.Item
-            key={lang.title}
-            className="text-sm px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-100 text-gray-700"
-            // onSelect={() => {}}
-          >
-            {lang.title}
-          </DropdownMenu.Item>
-        ))}
+        <DropdownMenu.Item
+          className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
+          // onSelect={() => {}}
+        >
+          <p>AdminPanel</p>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
+          // onSelect={() => {}}
+        >
+          <p onClick={logout}>LogOut</p>
+        </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

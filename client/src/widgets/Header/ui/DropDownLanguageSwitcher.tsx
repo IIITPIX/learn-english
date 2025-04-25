@@ -23,7 +23,7 @@ export function DropDownLanguageSwitcher() {
         {LANGUAGES.map((lang) => (
           <DropdownMenu.Item
             key={lang.code}
-            className="text-sm px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-100 text-gray-700"
+            className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
             // onSelect={() => {}}
           >
             {lang.label}

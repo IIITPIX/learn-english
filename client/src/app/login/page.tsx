@@ -46,7 +46,7 @@ export default function Login() {
 
       setSuccess("Login successful!");
       // Save token
-      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("access_token", data.access_token);
       // Redirect to main page
       router.push("/");
     } catch (error) {
