@@ -48,7 +48,7 @@ type TranslateInfoRequest = {
   clearTranslatedData: () => void;
   fetch: (text: string) => Promise<void>;
 };
-export const useGetWordTranslate = create<TranslateInfoRequest>((set, get) => ({
+export const useGetWordTranslate = create<TranslateInfoRequest>((set) => ({
   data: emptyTranslatedWord,
   clearTranslatedData: () => set({ data: emptyTranslatedWord }),
   fetch: async (text) => {
