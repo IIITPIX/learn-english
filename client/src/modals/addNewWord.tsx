@@ -7,6 +7,8 @@ import { useGetSuggestions } from "@/states/requests/useGetSuggestions";
 import { Loader2 } from "lucide-react";
 import { useAlertStore } from "@/states/alertStore";
 import { useDictionaryStore } from "@/states/requests/useGetDictionaryWords";
+import { secureFetch } from "@/lib/secureFetch";
+import { useGetWordTranslate } from "@/states/requests/useGetWordTranslate";
 
 export default function AddNewWord() {
   const { isOpen, setIsOpen } = useAddWordModal();
@@ -52,7 +54,6 @@ export default function AddNewWord() {
   const [isLoading, setIsLoading] = useState(false);
   const addWord = async () => {
     setIsLoading(true);
-    const accessToken = localStorage.getItem("accessToken");
     interface Payload {
       text: string;
       translate: string[];
@@ -71,12 +72,8 @@ export default function AddNewWord() {
     if (form.example.trim() !== "") {
       payload.examples = [form.example];
     }
-    fetch("https://learn-english-6ufl.onrender.com/api/words", {
+    secureFetch("/api/words", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
       body: JSON.stringify(payload),
     })
       .then((response) => response.json())
@@ -86,6 +83,7 @@ export default function AddNewWord() {
         fetchWords();
         console.log("Response:", data);
         clearData();
+        clearTranslatedData();
         setIsOpen(false);
       })
       .catch((error) => {
@@ -97,6 +95,16 @@ export default function AddNewWord() {
 
   const { setInputtedChars, suggestions, clearSuggestions } =
     useGetSuggestions();
+  const { data, fetch, clearTranslatedData } = useGetWordTranslate();
+  useEffect(() => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      translate: data.translate[0] || "",
+      meaning: data.meanings[0].definitions[0].definition || "",
+      example: data.meanings[0].definitions[0].example || "",
+    }));
+  }, []);
+
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     if (suppressSuggestions) {
@@ -165,9 +173,10 @@ export default function AddNewWord() {
                         key={idx}
                         className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
                         onClick={() => {
+                          fetch(s);
                           setForm((prevForm) => ({
                             ...prevForm,
-                            text: s,
+                            word: s,
                           }));
                           setSuppressSuggestions(true);
                           clearSuggestions();

@@ -24,20 +24,17 @@ export default function Registration() {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "http://localhost:3001/api/auth/registration",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: form.email,
-            username: form.name,
-            password: form.password,
-          }),
+      const response = await fetch("/api/auth/registration", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          email: form.email,
+          username: form.name,
+          password: form.password,
+        }),
+      });
 
       const data = await response.json();
 
